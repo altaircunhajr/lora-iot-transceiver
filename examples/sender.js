@@ -1,7 +1,14 @@
 var SX127x = require('../index'); // or require('sx127x')
 
 var sx127x = new SX127x({
-  frequency: 915e6
+    frequency: 916e6,
+    spreadingFactor: 7,
+    preambleLength: 8,
+    syncWord: 0x34,
+    txPower: 17,
+    dio0Pin: 22,
+    resetPin: 26,
+    signalBandwidth: 125e3
 });
 
 var count = 0;
@@ -17,10 +24,10 @@ sx127x.open(function(err) {
   // send a message every second
   setInterval(function() {
     console.log('write: hello ' + count);
-    sx127x.write(new Buffer('hello ' + count++), function(err) {
+    sx127x.write(new Buffer('hello. Eu sou a raspberry pi3. Aumentando o tamanho da mensagem para facilitar visualizacao. ' + count++), function(err) {
       console.log('\t', err ? err : 'success');
     });
-  }, 1000);
+  }, 2000);
 });
 
 process.on('SIGINT', function() {
